@@ -1,0 +1,8 @@
+colorama==0.4.6
+mac_vendor_lookup==0.1.12
+psutil==7.1.0
+pywin32==311
+Requests==2.32.5
+rich==14.2.0
+scapy==2.6.1
+urllib3==2.5.0
