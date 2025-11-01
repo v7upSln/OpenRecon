@@ -3,8 +3,8 @@
 
 
   [![PyPI Version](https://img.shields.io/pypi/v/openrecon)](https://pypi.org/project/openrecon/)
-  [![Chocolatey](https://img.shields.io/chocolatey/v/openrecon)](https://community.chocolatey.org/packages/openrecon)
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/x0wz5/)
   [![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://python.org)
 </div>
 
@@ -12,11 +12,6 @@
 OpenRecon is a comprehensive network reconnaissance tool designed for security professionals, network administrators, and cybersecurity enthusiasts. Originally developed as an educational project to explore network security concepts, it provides powerful scanning and discovery capabilities for authorized security assessments.
 
 # Installation
-
-**Via Chocolatey**:
-```bash
-choco install openrecon
-```
 
 **Via pip**:
 ```bash
