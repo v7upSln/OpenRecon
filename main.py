@@ -1,12 +1,43 @@
+#https://github.com/v7upSln/OpenRecon
+
 import argparse
 import sys
 import os
 import subprocess
 from pathlib import Path
 
+try:
+    from src.arp import main as arp_main
+    from src.packetgrab import main as packetgrab_main
+    from src.pingsweep import main as ping_main
+    from src.portscan import main as portscan_main
+    from info import display_system_info as show_info
+except ImportError:
+    try:
+        from src.arp import main as arp_main
+        from src.packetgrab import main as packetgrab_main
+        from src.pingsweep import main as ping_main
+        from src.portscan import main as portscan_main
+        from info import display_system_info as show_info
+    except ImportError as e:
+        print(f"Import error: {e}")
+        sys.exit(1)
+
+from __version__ import __version__ as Version
+
 SCRIPT_DIR = "src"
 
 def get_script_path(script_name):
+    """Get the path to script files - works both in dev and after installation"""
+    try:
+        import importlib.resources as pkg_resources
+        with pkg_resources.path('src', script_name) as script_path:
+            if script_path.exists():
+                return str(script_path)
+    except:
+        pass
+    
+    # Fallback to original method for development
     script_path = os.path.join(SCRIPT_DIR, script_name)
     if not os.path.isfile(script_path):
         raise FileNotFoundError(f"[!] Script '{script_name}' not found in '{SCRIPT_DIR}' directory.")
@@ -14,12 +45,8 @@ def get_script_path(script_name):
 
 def display_system_info():
     try:
-        from info import display_system_info as show_info
         show_info()
         return 0
-    except ImportError as e:
-        print(f"Error: Could not import system info module: {e}")
-        return 1
     except Exception as e:
         print(f"Error displaying system information: {e}")
         return 1
@@ -29,6 +56,9 @@ def main():
         description='OpenRecon: A network reconnaissance tool',
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
+    
+    # Add version argument
+    parser.add_argument('-v', '--version', action='version', version=f'OpenRecon {Version}')
     
     subparsers = parser.add_subparsers(
         dest='command',
@@ -107,6 +137,7 @@ def main():
     # Build command based on the selected tool
     cmd = [sys.executable, script_file]
     
+    # ... rest of your argument processing remains the same
     if args.command == 'arp':
         if args.network: cmd.extend(['-n', args.network])
         if args.interface: cmd.extend(['-i', args.interface])
